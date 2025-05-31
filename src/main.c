@@ -1,189 +1,71 @@
-/* CUB EN MOVIMENT
- *
- *
- *
- * // -------------------------42Balls----------------------------------------------------
-// Codam Coding College, Amsterdam @ 2022-2023 by W2Wizard.
-// See README in the root project for more information.
-// -----------------------------------------------------------------------------
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <MLX42/MLX42.h>
-
-//dimensiones de la pantalla
-#define WIDTH 512
-#define HEIGHT 512
-
-//variable global
-static mlx_image_t* image;
-
-// -----------------------------------------------------------------------------
-
-int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-    return (r << 24 | g << 16 | b << 8 | a);
-}
-
-void ft_randomize(void* param)
-{
-	(void)param;
-	for (uint32_t i = 0; i < image->width; ++i)
-	{
-		for (uint32_t y = 0; y < image->height; ++y)
-		{
-			uint32_t color = ft_pixel(
-				rand() % 0xFF, // R
-				rand() % 0xFF, // G
-				rand() % 0xFF, // B
-				rand() % 0xFF  // A
-			);
-			mlx_put_pixel(image, i, y, color);
-		}
-	}
-}
-
-//detecta teclas pulsadas
-void ft_hook(void* param)
-{
-	mlx_t* mlx = param;
-
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		image->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		image->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		image->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		image->instances[0].x += 5;
-}
-
-// -----------------------------------------------------------------------------
-
-int32_t main(void)
-{
-	mlx_t* mlx;
-
-	// Gotta error check this stuff
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-	{
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (!(image = mlx_new_image(mlx, 128, 128)))
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	
-	mlx_loop_hook(mlx, ft_randomize, mlx);
-	mlx_loop_hook(mlx, ft_hook, mlx);
-
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	return (EXIT_SUCCESS);
-}
-*/
-
-// Written by Bruh
-
-/* IMPRIMIR DIMENSIO FINESTRA
- *
- *
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include "MLX42/MLX42.h"
-#define WIDTH 256
-#define HEIGHT 256
-
-
-
-// Exit the program as failure.
-static void ft_error(void)
-{
-	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
-}
-
-// Print the window width and height.
-static void ft_hook(void* param)
-{
-	const mlx_t* mlx = param;
-
-	printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
-}
-
-int32_t	main(void)
-{
-
-	// MLX allows you to define its core behaviour before startup.
-	mlx_set_setting(MLX_MAXIMIZED, true);
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "42Balls", true);
-	if (!mlx)
-		ft_error();
-
-	// Do stuff
-
-	// Create and display the image.
-	mlx_image_t* img = mlx_new_image(mlx, 256, 256);
-	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
-		ft_error();
-
-	// Even after the image is being displayed, we can still modify the buffer.
-	mlx_put_pixel(img, 0, 0, 0xFF0000FF);
-
-	// Register a hook and pass mlx as an optional param.
-	// NOTE: Do this before calling mlx_loop!
-	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	return (EXIT_SUCCESS);
-	
-}
-
-*/
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
+/*   Updated: 2025/05/31 17:17:15 by mgrandia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "MLX42/MLX42.h"
 #include <stdlib.h>
-#include <string.h>
 #include "../includes/so_long.h"
 
-// Bytes Per Pixel. Since each pixel is represented as an integer, it will be four bytes for four channels.
-#define BPP sizeof(int32_t)
-
-int32_t	main(void)
+typedef struct s_data
 {
-    // Init mlx with a canvas size of 256x256 and the ability to resize the window.
-    mlx_t* mlx = mlx_init(256, 256, "MLX42", true);
+    mlx_t *mlx_ptr;
+} t_data;
 
-    if (!mlx) exit(EXIT_FAILURE);
-
-    // Create a 128x128 image.
-    mlx_image_t* img = mlx_new_image(mlx, 128, 128);
-
-    // Set the channels of each pixel in our image to the maximum byte value of 255.
-    memset(img->pixels, 255, img->width * img->height * BPP);
-
-    // Draw the image at coordinate (0, 0).
-    mlx_image_to_window(mlx, img, 0, 0);
-
-    // Run the main loop and terminate on quit.
-    mlx_loop(mlx);
+void on_destroy(mlx_t *mlx)
+{
     mlx_terminate(mlx);
-    ft_printf("Aqui esta la libft");
-
-    return (EXIT_SUCCESS);
+    exit(0);
 }
+
+void on_keypress(mlx_key_data_t keydata, void *param)
+{
+    mlx_t *mlx = (mlx_t *)param;  // Aquí casteamos correctamente el parámetro
+
+    if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
+    {
+        ft_printf("Pressed key: %d\n", keydata.key);
+        if (keydata.key == MLX_KEY_ESCAPE)
+            on_destroy(mlx);
+    }
+}
+
+int main(void)
+{
+    t_data data;
+
+    data.mlx_ptr = mlx_init(600, 400, "hi :)", true);
+    if (!data.mlx_ptr)
+        return 1;
+
+    // Pasamos data.mlx_ptr como parámetro a la función on_keypress
+    mlx_key_hook(data.mlx_ptr, on_keypress, data.mlx_ptr);
+
+    mlx_loop(data.mlx_ptr);
+
+    mlx_terminate(data.mlx_ptr);
+
+    return 0;
+}
+
+/*int	main(void)
+{
+	void	*mlx_ptr;
+
+	mlx_ptr = mlx_init(256, 256, "MLX42", true);
+	if (!mlx_ptr)
+		return (1);
+	mlx_loop(mlx_ptr);//mantiene la ventana abierta
+	mlx_terminate(mlx_ptr);//cierra y libera todo a l salir
+	//free(mlx_ptr);
+	return (0);
+}
+*/
 
