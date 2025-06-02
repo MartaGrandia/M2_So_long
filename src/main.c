@@ -13,59 +13,83 @@
 #include "MLX42/MLX42.h"
 #include <stdlib.h>
 #include "../includes/so_long.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <memory.h>
+#define WIDTH 512
+#define HEIGHT 512
 
-typedef struct s_data
+static void error(void)
 {
-    mlx_t *mlx_ptr;
-} t_data;
-
-void on_destroy(mlx_t *mlx)
-{
-    mlx_terminate(mlx);
-    exit(0);
+	puts(mlx_strerror(mlx_errno));
+	exit(EXIT_FAILURE);
 }
 
-void on_keypress(mlx_key_data_t keydata, void *param)
+char **leer_mapa(const char *ruta, int *filas)
 {
-    mlx_t *mlx = (mlx_t *)param;  // Aquí casteamos correctamente el parámetro
+	int	fd;
+	fd = open(ruta, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error al abrir el mapa");
+		return (EXIT_FAILURE);
+	}
+	char **mapa = NULL;
+	char *linea = NULL;
+	char	*c;
 
-    if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
-    {
-        ft_printf("Pressed key: %d\n", keydata.key);
-        if (keydata.key == MLX_KEY_ESCAPE)
-            on_destroy(mlx);
-    }
+	while(read(fd, &c, 1) > 0)//mentre no sigui el final de l'arxiu
+	{
+		if (c == "\n")//TODO	
+	}
+	close(fd);
+	return mapa;
 }
 
-int main(void)
+int32_t	main(void)
 {
-    t_data data;
+	int	filas = 0;
+	char **mapa = leer_mapa("./maps/mapa1.ber, &filas");
+	int	i;
 
-    data.mlx_ptr = mlx_init(600, 400, "hi :)", true);
-    if (!data.mlx_ptr)
-        return 1;
-
-    // Pasamos data.mlx_ptr como parámetro a la función on_keypress
-    mlx_key_hook(data.mlx_ptr, on_keypress, data.mlx_ptr);
-
-    mlx_loop(data.mlx_ptr);
-
-    mlx_terminate(data.mlx_ptr);
-
-    return 0;
-}
-
-/*int	main(void)
-{
-	void	*mlx_ptr;
-
-	mlx_ptr = mlx_init(256, 256, "MLX42", true);
-	if (!mlx_ptr)
+	i = 0;
+	if (!mapa);
 		return (1);
-	mlx_loop(mlx_ptr);//mantiene la ventana abierta
-	mlx_terminate(mlx_ptr);//cierra y libera todo a l salir
-	//free(mlx_ptr);
-	return (0);
-}
-*/
+	/*	
+	// Start mlx
+	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Test", true);
+	if (!mlx)
+        error();
 
+	// Try to load the file
+	mlx_texture_t* texture = mlx_load_png("./assets/img.png");
+	if (!texture)
+        error();
+	printf("Imagen: ancho = %d, alto = %d", texture->width, texture->height);
+	
+	// Convert texture to a displayable image
+	mlx_image_t* img = mlx_texture_to_image(mlx, texture);
+	if (!img)
+        error();
+
+	// Display the image
+	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
+        error();
+
+	mlx_loop(mlx);
+
+	// Optional, terminate will clean up any leftovers, this is just to demonstrate.
+	mlx_delete_image(mlx, img);
+	mlx_delete_texture(texture);
+	mlx_terminate(mlx);
+	return (EXIT_SUCCESS);*/
+	
+	
+	while(i < filas)
+	{
+		ft_printf("%s\n", mapa[i]);
+		free(mapa[i]);
+		i ++;
+	}
+	free(mapa);
+}
