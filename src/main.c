@@ -18,13 +18,27 @@
 #include <memory.h>
 #define WIDTH 512
 #define HEIGHT 512
-
-
 #include <fcntl.h>
 
 void	*ft_free(void *ptr)
 {
 	free(ptr);
+	return (NULL);
+}
+
+static char	**free_map(char **mapa, int line_count, char *line, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (i < line_count)
+	{
+		free (mapa[i]);
+		i ++;
+	}
+	free (mapa);
+	free (line);
+	close (fd);
 	return (NULL);
 }
 
@@ -37,81 +51,71 @@ char	*read_line(int fd)
 
 	line = malloc(1);
 	len = 0;
-	if(!line)
+	if (!line)
 		return (NULL);
 	line[0] = '\0';
-	while(read(fd, &c, 1) > 0)
+	while (read(fd, &c, 1) > 0)
 	{
 		if (c == '\n')
-			break;
+			break ;
 		new_line = ft_realloc(line, len + 2);
 		if (!new_line)
 			return (ft_free(line));
 		line = new_line;
 		line[len] = c;
-		line[len+1] = '\0';
+		line[len + 1] = '\0';
 		len ++;
 	}
 	if (len == 0)
-		return(ft_free(line));
+		return (ft_free(line));
 	return (line);
 }
 
 char	**read_mapa(const char *ruta, int *filas)
 {
-	int	fd;
-	char **mapa;
+	int		fd;
+	char	**mapa;
 	char	*line;
-	int	line_count;
+	int		line_count;
 	char	**temp;
-	int	i;
-	
+
 	fd = open(ruta, O_RDONLY);
 	mapa = NULL;
 	line_count = 0;
-	i = 0;
 	if (fd < 0)
 	{
 		perror("Error al abrir el mapa");
 		return (NULL);
 	}
-	while ((line = read_line(fd)) != NULL)
+	line = read_line(fd);
+	while (line != NULL)
 	{
-		temp = realloc(mapa, sizeof(char *)* (line_count +1));
+		temp = ft_realloc(mapa, sizeof(char *) * (line_count + 1));
 		if (!temp)
-		{
-			while (i < line_count)
-			{
-				free (mapa[i]);
-				i++;
-			}
-			free(mapa);
-			free(line);
-			close(fd);
-			return (NULL);
-		}
+			return (free_map(mapa, line_count, line, fd));
 		mapa = temp;
 		mapa[line_count] = line;
 		line_count ++;
-		
+		line = read_line(fd);
 	}
-	
 	close(fd);
 	if (filas)
 		*filas = line_count;
-	return mapa;
+	return (mapa);
 }
 
 int32_t	main(void)
 {
-	int	filas = 0;
-	char **mapa = read_mapa("./maps/map1.ber", &filas);
-	int	i;
+	int		filas;
+	char	**mapa;
+	int		i;
 
+	filas = 0;
+	mapa = read_mapa("./maps/map1.ber", &filas);
 	i = 0;
 	if (!mapa)
 		return (1);
-	while(i < filas)
+	while (i < filas)
 	{
 		ft_printf("%s\n", mapa[i]);
 		free(mapa[i]);
