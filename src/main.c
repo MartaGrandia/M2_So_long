@@ -19,72 +19,98 @@
 #define WIDTH 512
 #define HEIGHT 512
 
-static void error(void)
+
+#include <fcntl.h>
+
+void	*ft_free(void *ptr)
 {
-	puts(mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
+	free(ptr);
+	return (NULL);
 }
 
-char **leer_mapa(const char *ruta, int *filas)
+char	*read_line(int fd)
+{
+	char	*line;
+	char	*new_line;
+	size_t	len;
+	char	c;
+
+	line = malloc(1);
+	len = 0;
+	if(!line)
+		return (NULL);
+	line[0] = '\0';
+	while(read(fd, &c, 1) > 0)
+	{
+		if (c == '\n')
+			break;
+		new_line = ft_realloc(line, len + 2);
+		if (!new_line)
+			return (ft_free(line));
+		line = new_line;
+		line[len] = c;
+		line[len+1] = '\0';
+		len ++;
+	}
+	if (len == 0)
+		return(ft_free(line));
+	return (line);
+}
+
+char	**read_mapa(const char *ruta, int *filas)
 {
 	int	fd;
+	char **mapa;
+	char	*line;
+	int	line_count;
+	char	**temp;
+	int	i;
+	
 	fd = open(ruta, O_RDONLY);
+	mapa = NULL;
+	line_count = 0;
+	i = 0;
 	if (fd < 0)
 	{
 		perror("Error al abrir el mapa");
-		return (EXIT_FAILURE);
+		return (NULL);
 	}
-	char **mapa = NULL;
-	char *linea = NULL;
-	char	*c;
-
-	while(read(fd, &c, 1) > 0)//mentre no sigui el final de l'arxiu
+	while ((line = read_line(fd)) != NULL)
 	{
-		if (c == "\n")//TODO	
+		temp = realloc(mapa, sizeof(char *)* (line_count +1));
+		if (!temp)
+		{
+			while (i < line_count)
+			{
+				free (mapa[i]);
+				i++;
+			}
+			free(mapa);
+			free(line);
+			close(fd);
+			return (NULL);
+		}
+		mapa = temp;
+		mapa[line_count] = line;
+		line_count ++;
+		
 	}
+	
 	close(fd);
+	if (filas)
+		*filas = line_count;
 	return mapa;
 }
 
 int32_t	main(void)
 {
 	int	filas = 0;
-	char **mapa = leer_mapa("./maps/mapa1.ber, &filas");
+	char **mapa = read_mapa("./maps/map1.ber", &filas);
 	int	i;
 
 	i = 0;
-	if (!mapa);
+	if (!mapa)
 		return (1);
-	/*	
-	// Start mlx
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Test", true);
-	if (!mlx)
-        error();
-
-	// Try to load the file
-	mlx_texture_t* texture = mlx_load_png("./assets/img.png");
-	if (!texture)
-        error();
-	printf("Imagen: ancho = %d, alto = %d", texture->width, texture->height);
-	
-	// Convert texture to a displayable image
-	mlx_image_t* img = mlx_texture_to_image(mlx, texture);
-	if (!img)
-        error();
-
-	// Display the image
-	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
-        error();
-
-	mlx_loop(mlx);
-
-	// Optional, terminate will clean up any leftovers, this is just to demonstrate.
-	mlx_delete_image(mlx, img);
-	mlx_delete_texture(texture);
-	mlx_terminate(mlx);
-	return (EXIT_SUCCESS);*/
-	
-	
 	while(i < filas)
 	{
 		ft_printf("%s\n", mapa[i]);
