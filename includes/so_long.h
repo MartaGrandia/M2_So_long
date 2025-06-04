@@ -27,3 +27,4 @@
 void	*ft_free(void *ptr);
 char	**free_map(char **mapa, int line_count, char *line, int fd);
 char	**read_map(const char *ruta, int *filas);
+void	free_normal_map(char **map);

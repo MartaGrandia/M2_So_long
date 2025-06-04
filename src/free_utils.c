@@ -33,3 +33,18 @@ char	**free_map(char **mapa, int line_count, char *line, int fd)
 	close (fd);
 	return (NULL);
 }
+
+void	free_normal_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	if (!map)
+		return ;
+	while (map && map[i])
+	{
+		free(map[i]);
+		i ++;
+	}
+	free (map);
+}

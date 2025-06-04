@@ -28,7 +28,7 @@ static char	*read_line(int fd)
 	{
 		if (c == '\n')
 			break ;
-		new_line = ft_realloc(line, len + 2);
+		new_line = ft_realloc(line, len, len + 2);
 		if (!new_line)
 			return (ft_free(line));
 		line = new_line;
@@ -53,7 +53,8 @@ static char	**read_mapa_from_fd(int fd, int *filas)
 	line = read_line(fd);
 	while (line != NULL)
 	{
-		temp = ft_realloc(mapa, sizeof(char *) * (line_count + 1));
+		temp = ft_realloc(mapa, sizeof(char *) * line_count,
+				sizeof(char *) * (line_count + 2));
 		if (!temp)
 			return (free_map(mapa, line_count, line, fd));
 		mapa = temp;
@@ -61,6 +62,8 @@ static char	**read_mapa_from_fd(int fd, int *filas)
 		line_count ++;
 		line = read_line(fd);
 	}
+	if (mapa)
+		mapa[line_count] = NULL;
 	if (filas)
 		*filas = line_count;
 	return (mapa);
