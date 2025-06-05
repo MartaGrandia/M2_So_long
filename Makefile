@@ -52,7 +52,7 @@ LIBS = $(MLX_LIB) $(LIBFT) -ldl -lglfw -pthread -lm
 # ─────────────────────────────────────────────────────────────
 # ARCHIVOS
 # ─────────────────────────────────────────────────────────────
-SRC = srcs/main.c srcs/free_utils.c srcs/map_reader.c
+SRC = srcs/main.c srcs/free_utils.c srcs/map_reader.c srcs/map_valid.c srcs/utils.c
 OBJS = $(addprefix $(DIR_OBJS), $(notdir $(SRC:%.c=%.o)))
 DEP_FILES = $(OBJS:%.o=%.d)
 

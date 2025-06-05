@@ -28,3 +28,13 @@ void	*ft_free(void *ptr);
 char	**free_map(char **mapa, int line_count, char *line, int fd);
 char	**read_map(const char *ruta, int *filas);
 void	free_normal_map(char **map);
+
+//------------utils--------------
+void	find_player(char **map, int *x, int *y);
+
+//--------------map_validate-----------------
+int	validate_map_elements(char **map);
+int	count_colec(char **map);
+void	flood_fill(char **mapa, int x, int y, int alto);
+
+//-------------------------------------

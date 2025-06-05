@@ -12,7 +12,7 @@
 
 #include "../includes/so_long.h"
 
-static int	validate_map_elements(char **map)
+int	validate_map_elements(char **map)
 {
 	int	fil;
 	int	col;
@@ -40,7 +40,7 @@ static int	validate_map_elements(char **map)
 	return (1);
 }
 
-static int	count_colec(char **map)
+int	count_colec(char **map)
 {
 	int	fil;
 	int	col;
@@ -62,7 +62,7 @@ static int	count_colec(char **map)
 	return (count_c);
 }
 
-static void	flood_fill(char **mapa, int x, int y, int alto)
+void	flood_fill(char **mapa, int x, int y, int alto)
 {
 	int	ancho;
 
@@ -76,51 +76,4 @@ static void	flood_fill(char **mapa, int x, int y, int alto)
 	flood_fill(mapa, x - 1, y, alto);
 	flood_fill(mapa, x, y + 1, alto);
 	flood_fill(mapa, x, y - 1, alto);
-}
-
-void	find_player(char **map, int *x, int *y)
-{
-	int	fil;
-	int	col;
-
-	fil = 0;
-	while (map[fil])
-	{
-		col = 0;
-		while (map[fil][col])
-		{
-			if (map[fil][col] == 'P')
-			{
-				*x = col;
-				*y = fil;
-				return ;
-			}
-			col ++;
-		}
-		fil++;
-	}
-}
-
-int	process_map(char **map, char **map_2, int filas)
-{
-	int		num_colec;
-	int		x;
-	int		y;
-
-	num_colec = count_colec(map);
-	x = -1;
-	y = -1;
-	if (validate_map_elements(map) != 1 && num_colec == 0)
-	{
-		ft_printf("mapa no valido\n");
-		return (0);
-	}
-	find_player(map, &x, &y);
-	flood_fill(map_2, x, y, filas);
-	num_colec = count_colec(map_2);
-	if (num_colec == 0)
-		ft_printf("todo perfecto\n");
-	else
-		ft_printf("Error en el mapaaa\n");
-	return (1);
 }
