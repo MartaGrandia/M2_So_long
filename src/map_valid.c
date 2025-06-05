@@ -77,3 +77,45 @@ void	flood_fill(char **mapa, int x, int y, int alto)
 	flood_fill(mapa, x, y + 1, alto);
 	flood_fill(mapa, x, y - 1, alto);
 }
+
+//mapa rectangular?
+//mapa rodejat de murs?
+
+int	is_rectangular_map(char **map, int filas)
+{
+	if (filas <= 1)
+		return (1);
+	while (filas > 1)
+	{
+		if (ft_strlen(map[filas - 1]) == ft_strlen(map[filas - 2]))
+			filas --;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+int	check_walls_border(char **map, int filas)
+{
+	int	ancho;
+	int	i;
+
+	ancho = ft_strlen(map[0]);
+	i = 0;
+	if (filas == 0 || map == NULL)
+		return (0);
+	while (i < ancho)
+	{
+		if (map[0][i] != '1' || map[filas - 1][i] != '1')
+			return (0);
+		i ++;
+	}
+	i = 1;
+	while (i < filas)
+	{
+		if (map[i][0] != '1' || map[i][ancho - 1] != '1')
+			return (0);
+		i ++;
+	}
+	return (1);
+}

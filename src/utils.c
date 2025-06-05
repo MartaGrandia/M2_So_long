@@ -34,5 +34,3 @@ void	find_player(char **map, int *x, int *y)
 		fil++;
 	}
 }
-
-

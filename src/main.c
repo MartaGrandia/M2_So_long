@@ -35,18 +35,27 @@ int	process_map(char **map, char **map_2, int filas)
 	y = -1;
 	if (validate_map_elements(map) != 1 && num_colec == 0)
 	{
-		ft_printf("mapa no valido\n");
+		ft_printf("los elementos no estan bien\n");
 		return (0);
 	}
 	find_player(map, &x, &y);
 	flood_fill(map_2, x, y, filas);
 	num_colec = count_colec(map_2);
 	if (num_colec == 0)
-		ft_printf("todo perfecto\n");
+		ft_printf("llega a todos los C\n");
 	else
-		ft_printf("Error en el mapaaa\n");
+		ft_printf("No llega a todos los C\n");
+	if (is_rectangular_map(map, filas) == 0)
+		ft_printf("No es rectangular\n");
+	else
+		ft_printf("Es rectangular\n");
+	if (check_walls_border(map, filas) == 0)
+		ft_printf("No te paret a tot el borde\n");
+	else
+		ft_printf("Te paret a tot el borde\n");
 	return (1);
 }
+
 int32_t	main(void)
 {
 	int		filas;

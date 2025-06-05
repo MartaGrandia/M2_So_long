@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../libft/includes/libft.h"
-# include "../libft/includes/ft_printf.h"
-# include "../libft/includes/get_next_line.h"
-
+//TODO el if no def
+#include "../libft/includes/libft.h"
+#include "../libft/includes/ft_printf.h"
+#include "../libft/includes/get_next_line.h"
 #include "MLX42/MLX42.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,7 +22,6 @@
 #define WIDTH 512
 #define HEIGHT 512
 #include <fcntl.h>
-
 
 void	*ft_free(void *ptr);
 char	**free_map(char **mapa, int line_count, char *line, int fd);
@@ -33,8 +32,9 @@ void	free_normal_map(char **map);
 void	find_player(char **map, int *x, int *y);
 
 //--------------map_validate-----------------
-int	validate_map_elements(char **map);
-int	count_colec(char **map);
+int		validate_map_elements(char **map);
+int		count_colec(char **map);
 void	flood_fill(char **mapa, int x, int y, int alto);
-
+int		is_rectangular_map(char **map, int filas);
+int		check_walls_border(char **map, int filas);
 //-------------------------------------
