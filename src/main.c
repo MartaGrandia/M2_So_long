@@ -75,8 +75,8 @@ void	find_player(char **map, int *x, int *y)
 		{
 			if (map[fil][col] == 'P')
 			{
-				*x = fil;
-				*y = col;
+				*x = col;
+				*y = fil;
 				return ;
 			}
 			col ++;
@@ -85,19 +85,21 @@ void	find_player(char **map, int *x, int *y)
 	}
 }
 
-void	flood_fill(char **mapa, int x, int y)
+void	flood_fill(char **mapa, int x, int y, int ancho, int alto)
 {
+	if (x < 0 || y < 0 || x >= ancho || y >= alto)
+		return ;
 	//TODO comprobaciones para que no se salga de la matriz
 	if (mapa[y][x] == '1' || mapa[y][x] == 'V')
 		return ;
 	mapa[y][x] = 'V';
-	flood_fill(mapa, x + 1, y);
-	flood_fill(mapa, x - 1, y);
-	flood_fill(mapa, x, y + 1);
-	flood_fill(mapa, x, y - 1);
+	flood_fill(mapa, x + 1, y, ancho, alto);
+	flood_fill(mapa, x - 1, y, ancho, alto);
+	flood_fill(mapa, x, y + 1, ancho, alto);
+	flood_fill(mapa, x, y - 1, ancho, alto);
 }
 
-int	process_map(char **map, char **map_2)
+int	process_map(char **map, char **map_2, int filas)
 {
 	int		num_colec;
 	int	x;
@@ -113,13 +115,26 @@ int	process_map(char **map, char **map_2)
 		return (0);
 	}
 	find_player(map, &x, &y);
-	flood_fill(map_2, x, y);
+	flood_fill(map_2, x, y, ft_strlen(map[0]), filas);
 	num_colec = count_colec(map_2);
-	if (num_colec == 0)
-		ft_printf("todo perfecto");
+	if (num_colec > 0)
+		ft_printf("todo perfecto\n");
 	else
-		ft_printf("no llego");
+		ft_printf("Error en el mapaaa\n");
 	return (1);	
+}
+
+void	print_map(char **map)
+{
+	int	i;
+	
+	i = 0;
+
+	while (map[i])
+	{
+		ft_printf("%s\n", map[i]);
+		i ++;
+	}
 }
 
 int32_t	main(void)
@@ -133,12 +148,15 @@ int32_t	main(void)
 	mapa_2 = read_map("./maps/map1.ber", &filas);
 	if (!mapa || !mapa_2)
 		return (1);
-	if (!process_map(mapa, mapa_2))
+	if (!process_map(mapa, mapa_2, filas))
 	{
 		free_normal_map(mapa_2);
 		free_normal_map(mapa);
 		return (1);
 	}
+	print_map(mapa);
+	ft_printf("\n\n");
+	print_map(mapa_2);
 	free_normal_map(mapa_2);
 	free_normal_map(mapa);
 	return (0);
