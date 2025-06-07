@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 16:59:44 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:32:13 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ int	init_game(t_game *game, char **map, int map_height)
 	game->map = map;
 	game->map_height = map_height;
 	game->map_width = ft_strlen(map[0]);
-	ft_printf("Inicializando juego...\n");
-	ft_printf("Dimensiones del mapa: %dx%d\n", game->map_width, game->map_height);
-	ft_printf("Tamaño de ventana: %dx%d\n",game->map_width * TILE_SIZE, game->map_height * TILE_SIZE);
 	print_map_debug(map, map_height);
 	game->mlx = mlx_init(game->map_width * TILE_SIZE, game->map_height * TILE_SIZE, "so_long", true);
 	if (!game->mlx)
@@ -60,42 +57,18 @@ int	init_game(t_game *game, char **map, int map_height)
 		ft_printf("Error: No se pudo inicializar MLX\n");
 		return (0);
 	}
-	ft_printf("MLX inicializado correctamente\n");
-	ft_printf("Cargando texturas...\n");
 	if (!load_textures(game))
 	{
 		ft_printf("Error al cargar texturas\n");
 		return (0);
 	}
-	ft_printf("Texturas cargadas correctamente\n");
-	ft_printf("Convirtiendo texturas a imágenes...\n");
 	if (!convert_textures_to_images(game))
 	{
 		ft_printf("Error al convertir texturas\n");
 		return (0);
 	}
-	ft_printf("Texturas convertidas correctamente\n");
-	ft_printf("Dibujando mapa...\n");
 	draw_map(game);
-	ft_printf("Mapa dibujado correctamente\n");
 	return (1);
-}
-
-// Función para limpiar memoria de texturas
-void	cleanup_textures(t_game *game)
-{
-	if (game->textures.wall)
-		mlx_delete_texture(game->textures.wall);
-	if (game->textures.floor)
-		mlx_delete_texture(game->textures.floor);
-	if (game->textures.collectible)
-		mlx_delete_texture(game->textures.collectible);
-	if (game->textures.exit)
-		mlx_delete_texture(game->textures.exit);
-	if (game->textures.player)
-		mlx_delete_texture(game->textures.player);
-	if (game->images)
-		free(game->images);
 }
 
 // Función de debug para verificar que el mapa se carga correctamente
@@ -115,17 +88,17 @@ void	print_map_debug(char **map, int height)
 
 void	init_game_struct(t_game *game)
 {
-    game->mlx = NULL;
-    game->map = NULL;
-    game->map_width = 0;
-    game->map_height = 0;
-    game->images = NULL;
-    game->player_x = 0;
-    game->player_y = 0;
-    game->collectibles = 0;
-    game->moves = 0;
-
+	game->mlx = NULL;
+	game->map = NULL;
+	game->map_width = 0;
+	game->map_height = 0;
+	game->images = NULL;
+	game->player_x = 0;
+	game->player_y = 0;
+	game->collectibles = 0;
+	game->moves = 0;
 }
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -168,66 +141,4 @@ int	main(int argc, char **argv)
 	mlx_terminate(game.mlx);
 	free_normal_map(map_original);
 	return (0);
-}
-
-void	move_player(t_game *game, int dx, int dy)
-{
-
-	int	new_x;
-	int	new_y;
-	int	new_tile;
-
-	new_x = game->player_x + dx;
-	new_y = game->player_y + dy;
-	new_tile = game->map[new_y][new_x];
-	if (new_x < 0 || new_x >= game->map_width || new_y < 0 || new_y >= game->map_height)
-		return ;
-	if (new_tile == '1')
-		return ;
-	if (new_tile == 'C')
-	{
-		game->collectibles--;
-		game->map[new_y][new_x] = '0';
-		//Actualizar imagenes o el contador de coleccionables recogidos
-	}
-	if (new_tile == 'E')
-	{
-		if (game->collectibles == 0)
-		{
-			ft_printf("HAS GANADO!!");
-			mlx_close_window(game->mlx);
-			return ;
-		}
-		else
-			return ;
-	}
-	game->map[game->player_y][game->player_x] = '0';
-	game->player_x = new_x;
-	game->player_y = new_y;
-	game->map[new_y][new_x] = 'P';
-	game->moves++;
-	draw_map(game);
-	ft_printf("Movimiento: %d\n", game->moves);
-
-}
-
-// Ejemplo de handler para teclas (función básica)
-void	key_handler(mlx_key_data_t keydata, void *param)
-{
-	t_game	*game;
-
-	game = (t_game *)param;
-    	game->collectibles = count_colec(game->map);
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(game->mlx);
-// Aquí puedes agregar el movimiento del jugador
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-		move_player(game, 0, -1);
-	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
-		move_player(game, 0, 1);
-	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
-		move_player(game, 1, 0);
-	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
-		move_player(game, -1, 0);
-
 }
