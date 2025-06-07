@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 17:32:13 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:43:04 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	init_game(t_game *game, char **map, int map_height)
 	game->map_height = map_height;
 	game->map_width = ft_strlen(map[0]);
 	print_map_debug(map, map_height);
-	game->mlx = mlx_init(game->map_width * TILE_SIZE, game->map_height * TILE_SIZE, "so_long", true);
+	game->mlx = mlx_init(game->map_width * TILE_SIZE,
+			game->map_height * TILE_SIZE, "so_long", true);
 	if (!game->mlx)
 	{
 		ft_printf("Error: No se pudo inicializar MLX\n");
@@ -95,7 +96,7 @@ void	init_game_struct(t_game *game)
 	game->images = NULL;
 	game->player_x = 0;
 	game->player_y = 0;
-	game->collectibles = 0;
+	game->collect = 0;
 	game->moves = 0;
 }
 

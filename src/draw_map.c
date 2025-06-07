@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:53:03 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 13:07:38 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:41:37 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	load_textures(t_game *game)
 	game->textures.floor = mlx_load_png("assets/floor.png");
 	if (!game->textures.floor)
 		return (error_texture());
-	game->textures.collectible = mlx_load_png("assets/collectible.png");
-	if (!game->textures.collectible)
+	game->textures.collect = mlx_load_png("assets/collectible.png");
+	if (!game->textures.collect)
 		return (error_texture());
 	game->textures.exit = mlx_load_png("assets/exit.png");
 	if (!game->textures.exit)
@@ -45,7 +45,7 @@ int	convert_textures_to_images(t_game *game)
 		return (0);
 	game->images[0] = mlx_texture_to_image(game->mlx, game->textures.wall);
 	game->images[1] = mlx_texture_to_image(game->mlx, game->textures.floor);
-	game->images[2] = mlx_texture_to_image(game->mlx, game->textures.collectible);
+	game->images[2] = mlx_texture_to_image(game->mlx, game->textures.collect);
 	game->images[3] = mlx_texture_to_image(game->mlx, game->textures.exit);
 	game->images[4] = mlx_texture_to_image(game->mlx, game->textures.player);
 	while (i < 5)

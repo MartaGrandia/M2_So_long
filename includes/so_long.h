@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 17:24:45 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:40:17 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_textures
 {
 	mlx_texture_t	*wall;
 	mlx_texture_t	*floor;
-	mlx_texture_t	*collectible;
+	mlx_texture_t	*collect;
 	mlx_texture_t	*exit;
 	mlx_texture_t	*player;
 }	t_textures;
@@ -48,7 +48,7 @@ typedef struct s_game
 	mlx_image_t	**images;
 	int			player_x;
 	int			player_y;
-	int			collectibles;
+	int			collect;
 	int			moves;
 }	t_game;
 

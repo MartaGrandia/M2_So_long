@@ -6,10 +6,9 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:30:11 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 17:31:23 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:41:56 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/so_long.h"
 
@@ -29,12 +28,12 @@ void	move_player(t_game *game, int dx, int dy)
 		return ;
 	if (new_tile == 'C')
 	{
-		game->collectibles--;
+		game->collect--;
 		game->map[new_y][new_x] = '0';
 	}
 	if (new_tile == 'E')
 	{
-		if (game->collectibles == 0)
+		if (game->collect == 0)
 		{
 			ft_printf("HAS GANADO!!");
 			mlx_close_window(game->mlx);
@@ -58,7 +57,7 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	game->collectibles = count_colec(game->map);
+	game->collect = count_colec(game->map);
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
