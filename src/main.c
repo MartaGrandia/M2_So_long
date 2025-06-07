@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 16:37:46 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:59:44 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,19 @@ void	print_map_debug(char **map, int height)
 	ft_printf("=== Fin del mapa ===\n");
 }
 
+void	init_game_struct(t_game *game)
+{
+    game->mlx = NULL;
+    game->map = NULL;
+    game->map_width = 0;
+    game->map_height = 0;
+    game->images = NULL;
+    game->player_x = 0;
+    game->player_y = 0;
+    game->collectibles = 0;
+    game->moves = 0;
+
+}
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -140,6 +153,7 @@ int	main(int argc, char **argv)
 		free_normal_map(map_copy);
 		return (1);
 	}
+	init_game_struct(&game);
 	if (!init_game(&game, map_original, filas))
 	{
 		ft_printf("Error: No se pudo inicializar el juego\n");
@@ -187,7 +201,6 @@ void	move_player(t_game *game, int dx, int dy)
 		else
 			return ;
 	}
-	ft_printf("collectibles== %d\n",game->collectibles );
 	game->map[game->player_y][game->player_x] = '0';
 	game->player_x = new_x;
 	game->player_y = new_y;
@@ -204,7 +217,7 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	game->collectibles = count_colec(game->map);
+    	game->collectibles = count_colec(game->map);
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
 // Aquí puedes agregar el movimiento del jugador
