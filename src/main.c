@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 15:57:35 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:37:46 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,14 +187,13 @@ void	move_player(t_game *game, int dx, int dy)
 		else
 			return ;
 	}
+	ft_printf("collectibles== %d\n",game->collectibles );
 	game->map[game->player_y][game->player_x] = '0';
 	game->player_x = new_x;
 	game->player_y = new_y;
 	game->map[new_y][new_x] = 'P';
-	print_map_debug(game->map, game->map_height);
 	game->moves++;
 	draw_map(game);
-	//actualizar la visualizacion?
 	ft_printf("Movimiento: %d\n", game->moves);
 
 }
@@ -205,6 +204,7 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
+	game->collectibles = count_colec(game->map);
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
 // Aquí puedes agregar el movimiento del jugador
