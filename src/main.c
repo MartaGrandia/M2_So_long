@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 12:57:14 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 13:16:47 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,36 +43,24 @@ int	process_map(char **map, char **map_2, int filas)
 		ft_printf("Te paret a tot el borde\n");
 	return (1);
 }
-//--------------------------------------------------------
-
 
 // Función para inicializar el juego
 int	init_game(t_game *game, char **map, int map_height)
 {
-    // Copiar el mapa
 	game->map = map;
 	game->map_height = map_height;
 	game->map_width = ft_strlen(map[0]);
-    
 	ft_printf("Inicializando juego...\n");
 	ft_printf("Dimensiones del mapa: %dx%d\n", game->map_width, game->map_height);
-	ft_printf("Tamaño de ventana: %dx%d\n", 
-	game->map_width * TILE_SIZE, game->map_height * TILE_SIZE);
-    
-    // Debug: mostrar el mapa
+	ft_printf("Tamaño de ventana: %dx%d\n",game->map_width * TILE_SIZE, game->map_height * TILE_SIZE);
 	print_map_debug(map, map_height);
-    
-    // Inicializar MLX
-	game->mlx = mlx_init(game->map_width * TILE_SIZE, game->map_height * TILE_SIZE, "so_long",true);
+	game->mlx = mlx_init(game->map_width * TILE_SIZE, game->map_height * TILE_SIZE, "so_long", true);
 	if (!game->mlx)
 	{
 		ft_printf("Error: No se pudo inicializar MLX\n");
 		return (0);
 	}
-    
 	ft_printf("MLX inicializado correctamente\n");
-    
-    // Cargar texturas
 	ft_printf("Cargando texturas...\n");
 	if (!load_textures(game))
 	{
@@ -80,8 +68,6 @@ int	init_game(t_game *game, char **map, int map_height)
 		return (0);
 	}
 	ft_printf("Texturas cargadas correctamente\n");
-    
-    // Convertir texturas a imágenes
 	ft_printf("Convirtiendo texturas a imágenes...\n");
 	if (!convert_textures_to_images(game))
 	{
@@ -89,12 +75,9 @@ int	init_game(t_game *game, char **map, int map_height)
 		return (0);
 	}
 	ft_printf("Texturas convertidas correctamente\n");
-    
-    // Dibujar el mapa inicial
 	ft_printf("Dibujando mapa...\n");
 	draw_map(game);
 	ft_printf("Mapa dibujado correctamente\n");
-    
 	return (1);
 }
 
@@ -111,7 +94,6 @@ void	cleanup_textures(t_game *game)
 		mlx_delete_texture(game->textures.exit);
 	if (game->textures.player)
 		mlx_delete_texture(game->textures.player);
-    
 	if (game->images)
 		free(game->images);
 }
@@ -119,8 +101,8 @@ void	cleanup_textures(t_game *game)
 // Función de debug para verificar que el mapa se carga correctamente
 void	print_map_debug(char **map, int height)
 {
-	int i;
-       
+	int	i;
+
 	i = 0;
 	ft_printf("=== DEBUG: Contenido del mapa ===\n");
 	while (i < height)
@@ -131,73 +113,58 @@ void	print_map_debug(char **map, int height)
 	ft_printf("=== Fin del mapa ===\n");
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    t_game game;
-    char **map_original;
-    char **map_copy;
-    int filas = 0;
+	t_game	game;
+	char	**map_original;
+	char	**map_copy;
+	int		filas;
 
-    if (argc != 2)
-    {
-        ft_printf("Uso: %s <mapa.ber>\n", argv[0]);
-        return (1);
-    }
-
-    // Leer mapa original y copia (para validación o lo que uses)
-    map_original = read_map(argv[1], &filas);
-    map_copy = read_map(argv[1], &filas);
-
-    if (!map_original || !map_copy)
-    {
-        ft_printf("Error: No se pudo leer el mapa\n");
-        return (1);
-    }
-
-    // Validar o procesar el mapa con tu función
-    if (!process_map(map_original, map_copy, filas))
-    {
-        ft_printf("Error: Mapa inválido\n");
-        free_normal_map(map_original);
-        free_normal_map(map_copy);
-        return (1);
-    }
-
-    // Si el mapa es válido, inicializamos el juego con el mapa original
-    if (!init_game(&game, map_original, filas))
-    {
-        ft_printf("Error: No se pudo inicializar el juego\n");
-        free_normal_map(map_original);
-        free_normal_map(map_copy);
-        return (1);
-    }
-
-    // Liberar la copia ya que no se usará más
-    free_normal_map(map_copy);
-
-    // Hook para manejar teclas
-    mlx_key_hook(game.mlx, key_handler, &game);
-
-    // Iniciar el loop principal
-    mlx_loop(game.mlx);
-
-    // Limpiar recursos y memoria al terminar
-    cleanup_textures(&game);
-    mlx_terminate(game.mlx);
-    free_normal_map(map_original);
-
-    return (0);
+	filas = 0;
+	if (argc != 2)
+	{
+		ft_printf("Uso: %s <mapa.ber>\n", argv[0]);
+		return (1);
+	}
+	map_original = read_map(argv[1], &filas);
+	map_copy = read_map(argv[1], &filas);
+	if (!map_original || !map_copy)
+	{
+		ft_printf("Error: No se pudo leer el mapa\n");
+		return (1);
+	}
+	if (!process_map(map_original, map_copy, filas))
+	{
+		ft_printf("Error: Mapa inválido\n");
+		free_normal_map(map_original);
+		free_normal_map(map_copy);
+		return (1);
+	}
+	if (!init_game(&game, map_original, filas))
+	{
+		ft_printf("Error: No se pudo inicializar el juego\n");
+		free_normal_map(map_original);
+		free_normal_map(map_copy);
+		return (1);
+	}
+	free_normal_map(map_copy);
+	mlx_key_hook(game.mlx, key_handler, &game);
+	mlx_loop(game.mlx);
+	cleanup_textures(&game);
+	mlx_terminate(game.mlx);
+	free_normal_map(map_original);
+	return (0);
 }
 
 // Ejemplo de handler para teclas (función básica)
-void key_handler(mlx_key_data_t keydata, void *param)
+void	key_handler(mlx_key_data_t keydata, void *param)
 {
-    t_game *game = (t_game *)param;
-    
-    if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-        mlx_close_window(game->mlx);
-    
-    // Aquí puedes agregar el movimiento del jugador
-    // if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-    //     move_player(game, 0, -1);
+	t_game	*game;
+
+	game = (t_game *)param;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		mlx_close_window(game->mlx);
+// Aquí puedes agregar el movimiento del jugador
+// if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+//     move_player(game, 0, -1);
 }
