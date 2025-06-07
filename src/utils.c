@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/05/31 17:17:15 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 12:56:59 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,3 +34,23 @@ void	find_player(char **map, int *x, int *y)
 		fil++;
 	}
 }
+
+int	error_texture(void)
+{
+	ft_printf("Error: No se puedo cargar un archivo .png\n");
+	return (0);
+}
+
+void	print_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+	{
+		ft_printf("%s\n", map[i]);
+		i ++;
+	}
+}
+
+

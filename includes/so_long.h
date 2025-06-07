@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 11:51:18 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/07 12:56:31 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ void    move_player(t_game *game, int dx, int dy);
 int     is_valid_move(t_game *game, int x, int y);
 
 //-------------------------------marta
+
+int	error_texture(void);
+
+void	print_map(char **map);
 void    *ft_free(void *ptr);
 char	**free_map(char **mapa, int line_count, char *line, int fd);
 char	**read_map(const char *ruta, int *filas);

@@ -6,7 +6,7 @@
 #    By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/06 16:16:34 by mgrandia          #+#    #+#              #
-#    Updated: 2025/05/27 17:08:21 by mgrandia         ###   ########.fr        #
+#    Updated: 2025/06/07 12:53:41 by mgrandia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ LIBS = $(MLX_LIB) $(LIBFT) -ldl -lglfw -pthread -lm
 # ─────────────────────────────────────────────────────────────
 # ARCHIVOS
 # ─────────────────────────────────────────────────────────────
-SRC = srcs/main.c srcs/free_utils.c srcs/map_reader.c srcs/map_valid.c srcs/utils.c
+SRC = srcs/main.c srcs/free_utils.c srcs/map_reader.c srcs/map_valid.c srcs/utils.c srcs/draw_map.c
 OBJS = $(addprefix $(DIR_OBJS), $(notdir $(SRC:%.c=%.o)))
 DEP_FILES = $(OBJS:%.o=%.d)
 
