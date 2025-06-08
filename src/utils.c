@@ -35,10 +35,19 @@ void	find_player(char **map, int *x, int *y)
 	}
 }
 
-int	error_texture(void)
+// Función de debug para verificar que el mapa se carga correctamente
+void	print_map_debug(char **map, int height)
 {
-	ft_printf("Error: No se puedo cargar un archivo .png\n");
-	return (0);
+	int	i;
+
+	i = 0;
+	ft_printf("=== DEBUG: Contenido del mapa ===\n");
+	while (i < height)
+	{
+		ft_printf("Fila %d: %s\n", i, map[i]);
+		i++;
+	}
+	ft_printf("=== Fin del mapa ===\n");
 }
 
 void	print_map(char **map)

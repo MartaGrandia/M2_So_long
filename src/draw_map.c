@@ -76,12 +76,35 @@ mlx_image_t	*get_image_for_char(t_game *game, char c)
 	return (game->images[1]);
 }
 
+static void	draw_tile(t_game *game, int x, int y)
+{
+	mlx_image_t	*img;
+
+	if (mlx_image_to_window(game->mlx, game->images[1],
+			x * TILE_SIZE, y * TILE_SIZE) < 0)
+	{
+		ft_printf("Error: No se pudo dibujar el suelo\n");
+		return ;
+	}
+	img = get_image_for_char(game, game->map[y][x]);
+	if (mlx_image_to_window(game->mlx, img, x * TILE_SIZE,
+			y * TILE_SIZE) < 0)
+	{
+		ft_printf("Error: No dibujar en posición (%d, %d)\n", x, y);
+		return ;
+	}
+	if (game->map[y][x] == 'P')
+	{
+		game->player_x = x;
+		game->player_y = y;
+	}
+}
+
 // Función para dibujar el mapa completo
 void	draw_map(t_game *game)
 {
 	int			x;
 	int			y;
-	mlx_image_t	*img;
 
 	y = 0;
 	while (y < game->map_height)
@@ -89,27 +112,7 @@ void	draw_map(t_game *game)
 		x = 0;
 		while (x < game->map_width)
 		{
-		//	if (game->map[y][x] != '1')
-		//	{
-				if (mlx_image_to_window(game->mlx, game->images[1],
-						x * TILE_SIZE, y * TILE_SIZE) < 0)
-				{
-					ft_printf("Error: No se pudo dibujar el suelo\n");
-					return ;
-				}
-		//	}
-			img = get_image_for_char(game, game->map[y][x]);
-			if (mlx_image_to_window(game->mlx, img, x * TILE_SIZE,
-					y * TILE_SIZE) < 0)
-			{
-				ft_printf("Error: No dibujar en posición (%d, %d)\n", x, y);
-				return ;
-			}
-			if (game->map[y][x] == 'P')
-			{
-				game->player_x = x;
-				game->player_y = y;
-			}
+			draw_tile(game, x, y);
 			x++;
 		}
 		y++;

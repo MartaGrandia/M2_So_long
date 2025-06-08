@@ -22,28 +22,16 @@ int	process_map(char **map, char **map_2, int filas)
 	x = -1;
 	y = -1;
 	if (validate_map_elements(map) != 1 && num_colec == 0)
-	{
-		ft_printf("los elementos no estan bien\n");
-		return (0);
-	}
+		return (print_map_error(1));
 	find_player(map, &x, &y);
 	flood_fill(map_2, x, y, filas);
 	num_colec = count_colec(map_2);
-	if (num_colec == 0)
-		ft_printf("llega a todos los C\n");
-	else
-	{
-		ft_printf("No llega a todos los C\n");
-		return (0);
-	}
+	if (num_colec != 0)
+		return (print_map_error(2));
 	if (is_rectangular_map(map, filas) == 0)
-		ft_printf("No es rectangular\n");
-	else
-		ft_printf("Es rectangular\n");
+		return (print_map_error(3));
 	if (check_walls_border(map, filas) == 0)
-		ft_printf("No te paret a tot el borde\n");
-	else
-		ft_printf("Te paret a tot el borde\n");
+		return (print_map_error(4));
 	return (1);
 }
 
@@ -75,21 +63,6 @@ int	init_game(t_game *game, char **map, int map_height)
 	return (1);
 }
 
-// Función de debug para verificar que el mapa se carga correctamente
-void	print_map_debug(char **map, int height)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("=== DEBUG: Contenido del mapa ===\n");
-	while (i < height)
-	{
-		ft_printf("Fila %d: %s\n", i, map[i]);
-		i++;
-	}
-	ft_printf("=== Fin del mapa ===\n");
-}
-
 void	init_game_struct(t_game *game)
 {
 	game->mlx = NULL;
@@ -103,6 +76,7 @@ void	init_game_struct(t_game *game)
 	game->moves = 0;
 }
 
+/*
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -145,4 +119,54 @@ int	main(int argc, char **argv)
 	mlx_terminate(game.mlx);
 	free_normal_map(map_original);
 	return (0);
+}*/
+
+int	so_long(char **map_original, char **map_copy, int filas)
+{
+	t_game	game;
+
+	if (!process_map(map_original, map_copy, filas))
+	{
+		ft_printf("Error: Mapa inválido\n");
+		free_normal_map(map_original);
+		free_normal_map(map_copy);
+		return (1);
+	}
+	init_game_struct(&game);
+	if (!init_game(&game, map_original, filas))
+	{
+		ft_printf("Error: No se pudo inicializar el juego\n");
+		free_normal_map(map_original);
+		free_normal_map(map_copy);
+		return (1);
+	}
+	free_normal_map(map_copy);
+	mlx_key_hook(game.mlx, key_handler, &game);
+	mlx_loop(game.mlx);
+	cleanup_textures(&game);
+	mlx_terminate(game.mlx);
+	free_normal_map(map_original);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	char	**map_original;
+	char	**map_copy;
+	int		filas;
+
+	if (argc != 2)
+	{
+		ft_printf("Uso: %s <mapa.ber>\n", argv[0]);
+		return (1);
+	}
+	filas = 0;
+	map_original = read_map(argv[1], &filas);
+	map_copy = read_map(argv[1], &filas);
+	if (!map_original || !map_copy)
+	{
+		ft_printf("Error: No se pudo leer el mapa\n");
+		return (1);
+	}
+	return (so_long(map_original, map_copy, filas));
 }
