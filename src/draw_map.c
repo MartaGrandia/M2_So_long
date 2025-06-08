@@ -89,15 +89,15 @@ void	draw_map(t_game *game)
 		x = 0;
 		while (x < game->map_width)
 		{
-			if (game->map[y][x] != '1')
-			{
+		//	if (game->map[y][x] != '1')
+		//	{
 				if (mlx_image_to_window(game->mlx, game->images[1],
 						x * TILE_SIZE, y * TILE_SIZE) < 0)
 				{
 					ft_printf("Error: No se pudo dibujar el suelo\n");
 					return ;
 				}
-			}
+		//	}
 			img = get_image_for_char(game, game->map[y][x]);
 			if (mlx_image_to_window(game->mlx, img, x * TILE_SIZE,
 					y * TILE_SIZE) < 0)

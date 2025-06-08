@@ -32,7 +32,10 @@ int	process_map(char **map, char **map_2, int filas)
 	if (num_colec == 0)
 		ft_printf("llega a todos los C\n");
 	else
+	{
 		ft_printf("No llega a todos los C\n");
+		return (0);
+	}
 	if (is_rectangular_map(map, filas) == 0)
 		ft_printf("No es rectangular\n");
 	else
