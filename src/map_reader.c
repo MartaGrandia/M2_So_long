@@ -6,17 +6,18 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/05/31 17:17:15 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:05:07 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
+/*
 static char	*read_line(int fd)
 {
 	char	*line;
 	char	*new_line;
 	size_t	len;
+	int	b_read;
 	char	c;
 
 	line = malloc(1);
@@ -24,7 +25,8 @@ static char	*read_line(int fd)
 	if (!line)
 		return (NULL);
 	line[0] = '\0';
-	while (read(fd, &c, 1) > 0)
+	b_read = read(fd, &c, 1);
+	while (b_read > 0)
 	{
 		if (c == '\n')
 			break ;
@@ -35,22 +37,57 @@ static char	*read_line(int fd)
 		line[len] = c;
 		line[len + 1] = '\0';
 		len ++;
+		b_read = read(fd, &c, 1);
 	}
 	if (len == 0)
 		return (ft_free(line));
+	//if (b_read == 0)
+	//	return (NULL);
 	return (line);
-}
+}*/
 
 static char	**read_mapa_from_fd(int fd, int *filas)
 {
 	char	**mapa;
 	char	*line;
-	int		line_count;
+	int	line_count;
 	char	**temp;
+	char	*ptr;
 
+	(void) filas;
 	mapa = NULL;
 	line_count = 0;
-	line = read_line(fd);
+	line = get_next_line(fd);
+	if (!line)
+		return (NULL);
+	while (line != NULL)
+	{
+		ptr = ft_strchr(line, '\n');
+		if (ptr)
+			*ptr = '\0';
+		if (ft_strlen(line) == 0)
+		{
+			ft_printf("ea");
+			free(line);
+			return (mapa);
+		}
+				
+		temp = ft_realloc(mapa, sizeof(char *) * line_count,
+				sizeof(char *) * (line_count + 2));
+		if (!temp)
+			return (free_map(mapa, line_count, line, fd));
+		mapa = temp;
+		mapa[line_count] = ft_strdup(line);
+		line_count ++;
+		free(line);
+		line = get_next_line(fd);
+	}
+/*	line = read_line(fd);
+	if (ft_strncmp(&line[0],"\n", 1))
+	{
+		ft_printf("Hay un salto de linea");
+		return (ft_free(line));
+	}
 	while (line != NULL)
 	{
 		temp = ft_realloc(mapa, sizeof(char *) * line_count,
@@ -65,7 +102,7 @@ static char	**read_mapa_from_fd(int fd, int *filas)
 	if (mapa)
 		mapa[line_count] = NULL;
 	if (filas)
-		*filas = line_count;
+		*filas = line_count;*/
 	return (mapa);
 }
 
