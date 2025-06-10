@@ -69,7 +69,7 @@ void	move_player(t_game *game, int dx, int dy);
 int		is_valid_move(t_game *game, int x, int y);
 
 //-------------------------------marta
-int		error_texture(void);
+int		error_texture(int error_code);
 int		print_map_error(int error_code);
 void	print_map(char **map);
 void	*ft_free(void *ptr);

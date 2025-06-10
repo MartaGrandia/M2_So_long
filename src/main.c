@@ -41,7 +41,7 @@ int	init_game(t_game *game, char **map, int map_height)
 	game->map = map;
 	game->map_height = map_height;
 	game->map_width = ft_strlen(map[0]);
-	print_map_debug(map, map_height);
+//	print_map_debug(map, map_height);
 	game->mlx = mlx_init(game->map_width * TILE_SIZE,
 			game->map_height * TILE_SIZE, "so_long", true);
 	if (!game->mlx)
@@ -76,51 +76,6 @@ void	init_game_struct(t_game *game)
 	game->moves = 0;
 }
 
-/*
-int	main(int argc, char **argv)
-{
-	t_game	game;
-	char	**map_original;
-	char	**map_copy;
-	int		filas;
-
-	filas = 0;
-	if (argc != 2)
-	{
-		ft_printf("Uso: %s <mapa.ber>\n", argv[0]);
-		return (1);
-	}
-	map_original = read_map(argv[1], &filas);
-	map_copy = read_map(argv[1], &filas);
-	if (!map_original || !map_copy)
-	{
-		ft_printf("Error: No se pudo leer el mapa\n");
-		return (1);
-	}
-	if (!process_map(map_original, map_copy, filas))
-	{
-		ft_printf("Error: Mapa inválido\n");
-		free_normal_map(map_original);
-		free_normal_map(map_copy);
-		return (1);
-	}
-	init_game_struct(&game);
-	if (!init_game(&game, map_original, filas))
-	{
-		ft_printf("Error: No se pudo inicializar el juego\n");
-		free_normal_map(map_original);
-		free_normal_map(map_copy);
-		return (1);
-	}
-	free_normal_map(map_copy);
-	mlx_key_hook(game.mlx, key_handler, &game);
-	mlx_loop(game.mlx);
-	cleanup_textures(&game);
-	mlx_terminate(game.mlx);
-	free_normal_map(map_original);
-	return (0);
-}*/
-
 int	so_long(char **map_original, char **map_copy, int filas)
 {
 	t_game	game;
@@ -149,6 +104,16 @@ int	so_long(char **map_original, char **map_copy, int filas)
 	return (0);
 }
 
+int	count_filas(char **map)
+{
+	int	filas;
+
+	filas = 0;
+	while (map[filas]) 
+		filas ++;
+	return (filas);
+}
+
 int	main(int argc, char **argv)
 {
 	char	**map_original;
@@ -163,6 +128,7 @@ int	main(int argc, char **argv)
 	filas = 0;
 	map_original = read_map(argv[1], &filas);
 	map_copy = read_map(argv[1], &filas);
+	filas = count_filas(map_original);
 	if (!map_original || !map_copy)
 	{
 		ft_printf("Error: No se pudo leer el mapa\n");

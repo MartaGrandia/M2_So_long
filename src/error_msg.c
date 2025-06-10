@@ -12,9 +12,18 @@
 
 #include "../includes/so_long.h"
 
-int	error_texture(void)
+int	error_texture(int error_code)
 {
-	ft_printf("Error: No se puedo cargar un archivo .png\n");
+	if (error_code == 1)
+		ft_printf("Error: No se puedo cargar un archivo wall.png\n");
+	else if (error_code == 2)
+		ft_printf("Error: No se puedo cargar un archivo floor.png\n");
+	else if (error_code == 3)
+		ft_printf("Error: No se puedo cargar un archivo collectible.png\n");
+	else if (error_code == 4)
+		ft_printf("Error: No se puedo cargar un archivo exit.png\n");
+	else if (error_code == 5)
+		ft_printf("Error: No se puedo cargar un archivo player.png\n");
 	return (0);
 }
 
