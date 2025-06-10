@@ -30,12 +30,12 @@ int	error_texture(int error_code)
 int	print_map_error(int error_code)
 {
 	if (error_code == 1)
-		ft_printf("Los elementos no estan bien \n");
+		ft_printf("Error: Los elementos no estan bien \n");
 	else if (error_code == 2)
-		ft_printf("No llega a todos los colecionables\n");
+		ft_printf("Error: No llega a todos los colecionables\n");
 	else if (error_code == 3)
-		ft_printf("No es rectangular\n");
+		ft_printf("Error: No es rectangular\n");
 	else if (error_code == 4)
-		ft_printf("NO tiene paret en todo el borde\n");
+		ft_printf("Error: No tiene paret en todo el borde\n");
 	return (0);
 }

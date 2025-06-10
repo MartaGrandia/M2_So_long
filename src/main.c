@@ -82,7 +82,7 @@ int	so_long(char **map_original, char **map_copy, int filas)
 
 	if (!process_map(map_original, map_copy, filas))
 	{
-		ft_printf("Error: Mapa inválido\n");
+//		ft_printf("Error: Mapa inválido\n");
 		free_normal_map(map_original);
 		free_normal_map(map_copy);
 		return (1);
@@ -127,6 +127,10 @@ int	main(int argc, char **argv)
 	}
 	filas = 0;
 	map_original = read_map(argv[1], &filas);
+	if (map_original == NULL)
+	{
+		return (1);
+	}
 	map_copy = read_map(argv[1], &filas);
 	filas = count_filas(map_original);
 	if (!map_original || !map_copy)
