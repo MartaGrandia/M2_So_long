@@ -45,17 +45,17 @@ static int	init_game(t_game *game, char **map, int map_height)
 			game->map_height * TILE_SIZE, "so_long", true);
 	if (!game->mlx)
 	{
-		ft_printf("Error: No se pudo inicializar MLX\n");
+		ft_printf("Error: Could not initialize MLX\n");
 		return (0);
 	}
 	if (!load_textures(game))
 	{
-		ft_printf("Error al cargar texturas\n");
+		ft_printf("Error: Failed to load textures\n");
 		return (0);
 	}
 	if (!convert_textures_to_images(game))
 	{
-		ft_printf("Error al convertir texturas\n");
+		ft_printf("Error: Failed to convert textures\n");
 		return (0);
 	}
 	draw_map(game);
@@ -88,7 +88,7 @@ static int	so_long(char **map_original, char **map_copy, int filas)
 	init_game_struct(&game);
 	if (!init_game(&game, map_original, filas))
 	{
-		ft_printf("Error: No se pudo inicializar el juego\n");
+		ft_printf("Error: Could not initialize the game\n");
 		free_normal_map(map_original);
 		free_normal_map(map_copy);
 		return (1);
@@ -110,7 +110,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("Uso: %s <mapa.ber>\n", argv[0]);
+		ft_printf("Usage: %s <mapa.ber>\n", argv[0]);
 		return (1);
 	}
 	filas = 0;
@@ -120,10 +120,9 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	map_copy = read_map(argv[1], &filas);
-	filas = count_filas(map_original);
 	if (!map_original || !map_copy)
 	{
-		ft_printf("Error: No se pudo leer el mapa\n");
+		ft_printf("Error: Could not read the map\n");
 		return (1);
 	}
 	return (so_long(map_original, map_copy, filas));

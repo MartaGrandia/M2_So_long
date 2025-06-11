@@ -15,27 +15,27 @@
 int	error_texture(int error_code)
 {
 	if (error_code == 1)
-		ft_printf("Error: No se puedo cargar un archivo wall.png\n");
+		ft_printf("Error: Could not load wall.png file\n");
 	else if (error_code == 2)
-		ft_printf("Error: No se puedo cargar un archivo floor.png\n");
+		ft_printf("Error: Could not load floor.png file\n");
 	else if (error_code == 3)
-		ft_printf("Error: No se puedo cargar un archivo collectible.png\n");
+		ft_printf("Error: Could not load collectible.png file\n");
 	else if (error_code == 4)
-		ft_printf("Error: No se puedo cargar un archivo exit.png\n");
+		ft_printf("Error: Could not load exit.png file\n");
 	else if (error_code == 5)
-		ft_printf("Error: No se puedo cargar un archivo player.png\n");
+		ft_printf("Error: Could not load player.png file\n");
 	return (0);
 }
 
 int	print_map_error(int error_code)
 {
 	if (error_code == 1)
-		ft_printf("Error: Los elementos no estan bien \n");
+		ft_printf("Error: Invalid map elements\n");
 	else if (error_code == 2)
-		ft_printf("Error: No llega a todos los colecionables\n");
+		ft_printf("Error: Not all collectibles are reachable\n");
 	else if (error_code == 3)
-		ft_printf("Error: No es rectangular\n");
+		ft_printf("Error: Map is not rectangular\n");
 	else if (error_code == 4)
-		ft_printf("Error: No tiene paret en todo el borde\n");
+		ft_printf("Error: Map is not surrounded by wall\n");
 	return (0);
 }

@@ -28,7 +28,6 @@ static int	handle_mov_logic(t_game *game, int new_x, int new_y, int new_tile)
 	{
 		if (game->collect == 0)
 		{
-			ft_printf("YOU WIN!!");
 			mlx_close_window(game->mlx);
 			return (1);
 		}
@@ -46,7 +45,7 @@ static void	apply_movement_and_draw(t_game *game, int new_x, int new_y)
 	game->map[new_y][new_x] = 'P';
 	game->moves++;
 	draw_map(game);
-	ft_printf("Movimiento: %d\n", game->moves);
+	ft_printf("Movement: %d\n", game->moves);
 }
 
 static void	move_player(t_game *game, int dx, int dy)

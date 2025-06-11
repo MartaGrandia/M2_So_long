@@ -12,16 +12,6 @@
 
 #include "../includes/so_long.h"
 
-int	count_filas(char **map)
-{
-	int	filas;
-
-	filas = 0;
-	while (map[filas])
-		filas ++;
-	return (filas);
-}
-
 void	find_player(char **map, int *x, int *y)
 {
 	int	fil;
@@ -51,13 +41,13 @@ void	print_map_debug(char **map, int height)
 	int	i;
 
 	i = 0;
-	ft_printf("=== DEBUG: Contenido del mapa ===\n");
+	ft_printf("=== DEBUG: Map content ===\n");
 	while (i < height)
 	{
-		ft_printf("Fila %d: %s\n", i, map[i]);
+		ft_printf("ROW %d: %s\n", i, map[i]);
 		i++;
 	}
-	ft_printf("=== Fin del mapa ===\n");
+	ft_printf("=== End of map ===\n");
 }
 
 void	print_map(char **map)

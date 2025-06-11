@@ -71,7 +71,6 @@ int		is_rectangular_map(char **map, int filas);
 int		check_walls_border(char **map, int filas);
 
 //----------utils----------
-int		count_filas(char **map);
 void	find_player(char **map, int *x, int *y);
 void	print_map_debug(char **map, int height);
 void	print_map(char **map);

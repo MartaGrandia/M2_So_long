@@ -21,7 +21,7 @@ static char	*process_line(char *line)
 		*ptr = '\0';
 	if (ft_strlen(line) == 0)
 	{
-		ft_printf("Error: El mapa tiene una linea en blanco");
+		ft_printf("Error: Blank line detected in map\n");
 		free(line);
 		return (NULL);
 	}
@@ -76,7 +76,7 @@ char	**read_map(const char *ruta, int *filas)
 	fd = open(ruta, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("Error al abrir el mapa");
+		ft_printf("Error: Could not open the map\n");
 		return (NULL);
 	}
 	mapa = read_mapa_from_fd(fd, filas);

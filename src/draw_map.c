@@ -52,7 +52,7 @@ int	convert_textures_to_images(t_game *game)
 	{
 		if (!game->images[i])
 		{
-			ft_printf("Error: No se pudo convertir textura %d a imagen\n", i);
+			ft_printf("Error: Could not convert texture %d to image\n", i);
 			return (0);
 		}
 		i ++;
@@ -83,14 +83,14 @@ static void	draw_tile(t_game *game, int x, int y)
 	if (mlx_image_to_window(game->mlx, game->images[1],
 			x * TILE_SIZE, y * TILE_SIZE) < 0)
 	{
-		ft_printf("Error: No se pudo dibujar el suelo\n");
+		ft_printf("Error: Could not draw floor\n");
 		return ;
 	}
 	img = get_image_for_char(game, game->map[y][x]);
 	if (mlx_image_to_window(game->mlx, img, x * TILE_SIZE,
 			y * TILE_SIZE) < 0)
 	{
-		ft_printf("Error: No dibujar en posición (%d, %d)\n", x, y);
+		ft_printf("Error: Could not draw at position (%d, %d)\n", x, y);
 		return ;
 	}
 	if (game->map[y][x] == 'P')
