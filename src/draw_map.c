@@ -12,9 +12,9 @@
 
 #include "../includes/so_long.h"
 
-// Carga todas las texturas PNG necesarias para el juego desde la carpeta "assets".
-// Asigna cada textura al campo correspondiente en la estructura 'game->textures'.
-// En caso de fallo en la carga de alguna textura, imprime un error específico y retorna 0.
+// Carga las texturas PNG necesarias para el juego desde la carpeta "assets".
+// Asigna cada textura al campo correspondiente en la estructurai.
+// En caso de fallo en la carga, imprime un error específico y retorna 0.
 // Retorna 1 si todas las texturas se cargan correctamente.
 int	load_textures(t_game *game)
 {
@@ -37,9 +37,9 @@ int	load_textures(t_game *game)
 	return (1);
 }
 
-// Convierte las texturas cargadas en imágenes que pueden ser dibujadas en pantalla.
+// Convierte las texturas en imágenes que pueden ser dibujadas en pantalla.
 // Reserva memoria para un array de punteros a imágenes y asigna cada imagen.
-// Si falla la asignación o la conversión de alguna textura, muestra error y retorna 0.
+// Si falla la asignación o conversión de alguna text, muestra error y ret 0.
 // Retorna 1 si todas las texturas se convierten correctamente.
 int	convert_textures_to_images(t_game *game)
 {
@@ -86,7 +86,7 @@ static mlx_image_t	*get_image_for_char(t_game *game, char c)
 }
 
 // Dibuja un "tile" o casilla del mapa en la posición (x, y).
-// Primero dibuja el suelo y luego la imagen correspondiente al carácter del mapa.
+// Primero dibuja el floor luego la img correspondiente al carácter del mapa.
 // Si falla al dibujar el suelo o la imagen, imprime un mensaje de error.
 // Actualiza las coordenadas del jugador si el tile es la posición del jugador.
 static void	draw_tile(t_game *game, int x, int y)

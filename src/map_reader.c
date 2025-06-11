@@ -56,7 +56,7 @@ static char	**add_line_to_map(char **mapa, char *line, int line_count)
 // - Agrega cada línea procesada al mapa dinámico con add_line_to_map.
 // - En caso de error libera toda la memoria y cierra el descriptor.
 // - Al finalizar, almacena en 'filas' la cantidad de líneas leídas.
-// Retorna el mapa como un array de cadenas terminado en NULL o NULL en caso de error.
+// Ret el mapa como un array de cadenas terminado en NULL o NULL si hay error.
 static char	**read_mapa_from_fd(int fd, int *filas)
 {
 	char	**mapa;

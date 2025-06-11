@@ -12,7 +12,7 @@
 
 #include "../includes/so_long.h"
 
-// Libera la memoria asociada a las texturas cargadas y a las imágenes del juego:
+// Free la memoria asociada a las texturas cargadas y a las imágenes del juego:
 // - Elimina cada textura si fue cargada
 // - Libera el array de imágenes si existe
 void	cleanup_textures(t_game *game)

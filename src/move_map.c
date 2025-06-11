@@ -12,10 +12,10 @@
 
 #include "../includes/so_long.h"
 
-// Maneja la lógica del movimiento del jugador en base a la nueva posición y el tipo de tile.
-// Verifica que la nueva posición esté dentro del mapa y que no sea una pared ('1').
-// Si el tile es un coleccionable ('C'), decrementa el contador y cambia el tile a suelo ('0')
-// Si el tile es la salida ('E'), solo permite cerrar la ventana (ganar) si no quedan coleccionables.
+// Maneja la lógica del mov del jugador segun la new posición y el tipo de tile.
+// Verif. que la newa posición esté dentro del mapa y que no sea un ('1').
+// Si tile == coleccionable ('C'), contador--  y cambia el tile a suelo ('0')
+// Si el tile es ('E'), solo permite cerrar la ventana(ganar) si colect = 0
 // Retorna 1 si el movimiento es válido y puede realizarse, 0 en caso contrario.
 static int	handle_mov_logic(t_game *game, int new_x, int new_y, int new_tile)
 {
@@ -44,7 +44,7 @@ static int	handle_mov_logic(t_game *game, int new_x, int new_y, int new_tile)
 
 // Aplica el movimiento actualizando la posición del jugador en el mapa,
 // actualiza el contador de movimientos, y redibuja el mapa completo.
-// Cambia la posición anterior del jugador a suelo ('0') y la nueva a jugador ('P').
+// Cambia la posición anterior del jugador a ('0')  y la nueva a ('P').
 static void	apply_movement_and_draw(t_game *game, int new_x, int new_y)
 {
 	game->map[game->player_y][game->player_x] = '0';
@@ -73,7 +73,7 @@ static void	move_player(t_game *game, int dx, int dy)
 }
 
 // Manejador básico de eventos de teclado.
-// Detecta las teclas W, A, S, D para mover al jugador en las cuatro direcciones.
+// Detecta las teclas W, A, S, D para mover al jugador 
 // También cierra la ventana si se presiona Escape.
 // Actualiza el contador de coleccionables antes de cada movimiento.
 void	key_handler(mlx_key_data_t keydata, void *param)

@@ -68,8 +68,8 @@ int	count_colec(char **map)
 	return (count_c);
 }
 
-// Realiza un algoritmo flood fill para marcar las posiciones accesibles desde (x, y).
-// Marca con 'V' las celdas visitadas que no sean paredes ('1') ni ya visitadas ('V').
+// Realiza un algoritmo para marcar las posiciones accesibles desde (x, y).
+// Marca con 'V' las celdas visitadas que no sean paredes ('1') ni ('V').
 // Sirve para comprobar la accesibilidad de las áreas del mapa.
 // Parámetros: mapa, coordenadas x e y, y la altura del mapa (número de filas).
 void	flood_fill(char **mapa, int x, int y, int alto)
@@ -106,7 +106,7 @@ int	is_rectangular_map(char **map, int filas)
 }
 
 // Verifica que el borde del mapa esté completamente rodeado por paredes ('1').
-// Comprueba la primera y última fila, y la primera y última columna de cada fila.
+// Comprueba la primera y última fila, y la primera y última columna.
 // Devuelve 1 si todas las posiciones del borde son paredes, 0 si no.
 int	check_walls_border(char **map, int filas)
 {

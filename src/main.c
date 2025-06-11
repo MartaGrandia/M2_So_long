@@ -17,7 +17,7 @@
 // - Busca al jugador y realiza flood fill desde su posición
 // - Verifica que todos los coleccionables sean accesibles
 // - Comprueba que el mapa sea rectangular y esté rodeado de paredes
-// Devuelve 1 si el mapa es válido, o muestra el error correspondiente y devuelve 0
+// Devuelve 1 si el mapa es válido, o muestra el error y devuelve 0
 static int	process_map(char **map, char **map_2, int filas)
 {
 	int		num_colec;
