@@ -12,15 +12,41 @@
 
 #include "../includes/so_long.h"
 
+static char	*process_line(char *line)
+{
+	char	*ptr;
+
+	ptr = ft_strchr(line, '\n');
+	if (ptr)
+		*ptr = '\0';
+	if (ft_strlen(line) == 0)
+	{
+		ft_printf("Error: El mapa tiene una linea en blanco");
+		free(line);
+		return (NULL);
+	}
+	return (line);
+}
+
+static char	**add_line_to_map(char **mapa, char *line, int line_count)
+{
+	char	**temp;
+
+	temp = ft_realloc(mapa, sizeof(char *) * line_count,
+			sizeof(char *) * (line_count + 2));
+	if (!temp)
+		return (NULL);
+	mapa = temp;
+	mapa[line_count] = ft_strdup(line);
+	return (mapa);
+}
+
 static char	**read_mapa_from_fd(int fd, int *filas)
 {
 	char	**mapa;
 	char	*line;
-	int	line_count;
-	char	**temp;
-	char	*ptr;
+	int		line_count;
 
-	(void) filas;
 	mapa = NULL;
 	line_count = 0;
 	line = get_next_line(fd);
@@ -28,26 +54,17 @@ static char	**read_mapa_from_fd(int fd, int *filas)
 		return (NULL);
 	while (line != NULL)
 	{
-		ptr = ft_strchr(line, '\n');
-		if (ptr)
-			*ptr = '\0';
-		if (ft_strlen(line) == 0)
-		{
-			ft_printf("Error: El mapa tiene una linea en blanco");
-			free(line);
+		line = process_line(line);
+		if (!line)
 			return (NULL);
-		}
-				
-		temp = ft_realloc(mapa, sizeof(char *) * line_count,
-				sizeof(char *) * (line_count + 2));
-		if (!temp)
+		mapa = add_line_to_map(mapa, line, line_count);
+		if (!mapa)
 			return (free_map(mapa, line_count, line, fd));
-		mapa = temp;
-		mapa[line_count] = ft_strdup(line);
 		line_count ++;
 		free(line);
 		line = get_next_line(fd);
 	}
+	*filas = line_count;
 	return (mapa);
 }
 

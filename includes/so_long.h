@@ -26,7 +26,6 @@
 # define TILE_SIZE 64
 
 // Estructura para almacenar las texturas
-
 typedef struct s_textures
 {
 	mlx_texture_t	*wall;
@@ -37,7 +36,6 @@ typedef struct s_textures
 }	t_textures;
 
 // Estructura principal del juego
-
 typedef struct s_game
 {
 	mlx_t		*mlx;
@@ -52,39 +50,37 @@ typedef struct s_game
 	int			moves;
 }	t_game;
 
-// Funciones principales
-int		load_textures(t_game *game);
-int		convert_textures_to_images(t_game *game);
-void	draw_map(t_game *game);
-int		init_game(t_game *game, char **map, int map_height);
+//----------map_reader----------
+char	**read_map(const char *ruta, int *filas);
+
+//----------free_utils---------
 void	cleanup_textures(t_game *game);
-void	key_handler(mlx_key_data_t keydata, void *param);
-void	print_map_debug(char **map, int height);
-// Funciones de validación (que ya deberías tener)
-char	**parse_and_validate_map(char *filename);
-int		validate_map(char **map);
-
-// Funciones de movimiento (para implementar después)
-void	move_player(t_game *game, int dx, int dy);
-int		is_valid_move(t_game *game, int x, int y);
-
-//-------------------------------marta
-int		error_texture(int error_code);
-int		print_map_error(int error_code);
-void	print_map(char **map);
 void	*ft_free(void *ptr);
 char	**free_map(char **mapa, int line_count, char *line, int fd);
-char	**read_map(const char *ruta, int *filas);
 void	free_normal_map(char **map);
 
-//------------utils--------------
-void	find_player(char **map, int *x, int *y);
+//----------error_msg---------
+int		error_texture(int error_code);
+int		print_map_error(int error_code);
 
-//--------------map_validate-----------------
+//----------map_valid----------
 int		validate_map_elements(char **map);
 int		count_colec(char **map);
 void	flood_fill(char **mapa, int x, int y, int alto);
 int		is_rectangular_map(char **map, int filas);
 int		check_walls_border(char **map, int filas);
-//------------------------------------
+
+//----------utils----------
+int		count_filas(char **map);
+void	find_player(char **map, int *x, int *y);
+void	print_map_debug(char **map, int height);
+void	print_map(char **map);
+
+//----------draw_map----------
+int		load_textures(t_game *game);
+int		convert_textures_to_images(t_game *game);
+void	draw_map(t_game *game);
+
+//----------move_map----------
+void	key_handler(mlx_key_data_t keydata, void *param);
 #endif

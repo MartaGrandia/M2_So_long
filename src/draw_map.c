@@ -61,7 +61,7 @@ int	convert_textures_to_images(t_game *game)
 }
 
 // Función para obtener la imagen correcta según el carácter del mapa
-mlx_image_t	*get_image_for_char(t_game *game, char c)
+static mlx_image_t	*get_image_for_char(t_game *game, char c)
 {
 	if (c == '1')
 		return (game->images[0]);

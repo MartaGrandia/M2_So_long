@@ -12,7 +12,7 @@
 
 #include "../includes/so_long.h"
 
-int	process_map(char **map, char **map_2, int filas)
+static int	process_map(char **map, char **map_2, int filas)
 {
 	int		num_colec;
 	int		x;
@@ -36,12 +36,11 @@ int	process_map(char **map, char **map_2, int filas)
 }
 
 // Función para inicializar el juego
-int	init_game(t_game *game, char **map, int map_height)
+static int	init_game(t_game *game, char **map, int map_height)
 {
 	game->map = map;
 	game->map_height = map_height;
 	game->map_width = ft_strlen(map[0]);
-//	print_map_debug(map, map_height);
 	game->mlx = mlx_init(game->map_width * TILE_SIZE,
 			game->map_height * TILE_SIZE, "so_long", true);
 	if (!game->mlx)
@@ -63,7 +62,7 @@ int	init_game(t_game *game, char **map, int map_height)
 	return (1);
 }
 
-void	init_game_struct(t_game *game)
+static void	init_game_struct(t_game *game)
 {
 	game->mlx = NULL;
 	game->map = NULL;
@@ -76,13 +75,12 @@ void	init_game_struct(t_game *game)
 	game->moves = 0;
 }
 
-int	so_long(char **map_original, char **map_copy, int filas)
+static int	so_long(char **map_original, char **map_copy, int filas)
 {
 	t_game	game;
 
 	if (!process_map(map_original, map_copy, filas))
 	{
-//		ft_printf("Error: Mapa inválido\n");
 		free_normal_map(map_original);
 		free_normal_map(map_copy);
 		return (1);
@@ -102,16 +100,6 @@ int	so_long(char **map_original, char **map_copy, int filas)
 	mlx_terminate(game.mlx);
 	free_normal_map(map_original);
 	return (0);
-}
-
-int	count_filas(char **map)
-{
-	int	filas;
-
-	filas = 0;
-	while (map[filas]) 
-		filas ++;
-	return (filas);
 }
 
 int	main(int argc, char **argv)

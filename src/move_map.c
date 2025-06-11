@@ -49,7 +49,7 @@ static void	apply_movement_and_draw(t_game *game, int new_x, int new_y)
 	ft_printf("Movimiento: %d\n", game->moves);
 }
 
-void	move_player(t_game *game, int dx, int dy)
+static void	move_player(t_game *game, int dx, int dy)
 {
 	int	new_x;
 	int	new_y;

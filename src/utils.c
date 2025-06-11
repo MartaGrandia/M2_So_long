@@ -12,6 +12,16 @@
 
 #include "../includes/so_long.h"
 
+int	count_filas(char **map)
+{
+	int	filas;
+
+	filas = 0;
+	while (map[filas])
+		filas ++;
+	return (filas);
+}
+
 void	find_player(char **map, int *x, int *y)
 {
 	int	fil;
