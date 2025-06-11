@@ -12,7 +12,10 @@
 
 #include "../includes/so_long.h"
 
-// Función para cargar todas las texturas desde la carpeta assets
+// Carga todas las texturas PNG necesarias para el juego desde la carpeta "assets".
+// Asigna cada textura al campo correspondiente en la estructura 'game->textures'.
+// En caso de fallo en la carga de alguna textura, imprime un error específico y retorna 0.
+// Retorna 1 si todas las texturas se cargan correctamente.
 int	load_textures(t_game *game)
 {
 	game->textures.wall = mlx_load_png("assets/wall.png");
@@ -34,7 +37,10 @@ int	load_textures(t_game *game)
 	return (1);
 }
 
-// Función para convertir texturas a imágenes
+// Convierte las texturas cargadas en imágenes que pueden ser dibujadas en pantalla.
+// Reserva memoria para un array de punteros a imágenes y asigna cada imagen.
+// Si falla la asignación o la conversión de alguna textura, muestra error y retorna 0.
+// Retorna 1 si todas las texturas se convierten correctamente.
 int	convert_textures_to_images(t_game *game)
 {
 	int	i;
@@ -60,7 +66,10 @@ int	convert_textures_to_images(t_game *game)
 	return (1);
 }
 
-// Función para obtener la imagen correcta según el carácter del mapa
+// Devuelve la imagen correcta según el carácter del mapa recibido:
+// '1' → pared (wall), '0' → suelo (floor), 'C' → coleccionable,
+// 'E' → salida (exit), 'P' → jugador (player).
+// Si el carácter no coincide, retorna la imagen de suelo por defecto.
 static mlx_image_t	*get_image_for_char(t_game *game, char c)
 {
 	if (c == '1')
@@ -76,6 +85,10 @@ static mlx_image_t	*get_image_for_char(t_game *game, char c)
 	return (game->images[1]);
 }
 
+// Dibuja un "tile" o casilla del mapa en la posición (x, y).
+// Primero dibuja el suelo y luego la imagen correspondiente al carácter del mapa.
+// Si falla al dibujar el suelo o la imagen, imprime un mensaje de error.
+// Actualiza las coordenadas del jugador si el tile es la posición del jugador.
 static void	draw_tile(t_game *game, int x, int y)
 {
 	mlx_image_t	*img;
@@ -100,7 +113,9 @@ static void	draw_tile(t_game *game, int x, int y)
 	}
 }
 
-// Función para dibujar el mapa completo
+// Recorre todo el mapa y dibuja cada casilla usando draw_tile.
+// Itera por filas y columnas según el tamaño del mapa almacenado en 'game'.
+// Esta función es responsable de mostrar el mapa completo en la ventana.
 void	draw_map(t_game *game)
 {
 	int			x;

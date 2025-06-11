@@ -12,6 +12,7 @@
 
 #include "../includes/so_long.h"
 
+// Muestra un mensaje de error específico si falla la carga de una textura
 int	error_texture(int error_code)
 {
 	if (error_code == 1)
@@ -27,6 +28,7 @@ int	error_texture(int error_code)
 	return (0);
 }
 
+// Muestra un mensaje de error específico si el mapa no es válido
 int	print_map_error(int error_code)
 {
 	if (error_code == 1)

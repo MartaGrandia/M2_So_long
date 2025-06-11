@@ -12,6 +12,9 @@
 
 #include "../includes/so_long.h"
 
+// Busca la posición del jugador ('P') en el mapa y guarda sus coordenadas en *x y *y.
+// Recorre fila por fila y columna por columna hasta encontrar 'P'.
+// Cuando lo encuentra, asigna las coordenadas y termina la función.
 void	find_player(char **map, int *x, int *y)
 {
 	int	fil;
@@ -32,32 +35,5 @@ void	find_player(char **map, int *x, int *y)
 			col ++;
 		}
 		fil++;
-	}
-}
-
-// Función de debug para verificar que el mapa se carga correctamente
-void	print_map_debug(char **map, int height)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("=== DEBUG: Map content ===\n");
-	while (i < height)
-	{
-		ft_printf("ROW %d: %s\n", i, map[i]);
-		i++;
-	}
-	ft_printf("=== End of map ===\n");
-}
-
-void	print_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		ft_printf("%s\n", map[i]);
-		i ++;
 	}
 }

@@ -12,6 +12,9 @@
 
 #include "../includes/so_long.h"
 
+// Valida que el mapa contenga exactamente un jugador ('P') y una salida ('E').
+// Recorre todo el mapa contando ocurrencias de 'P' y 'E'.
+// Devuelve 1 si hay exactamente uno de cada uno, o 0 en caso contrario.
 int	validate_map_elements(char **map)
 {
 	int	fil;
@@ -40,6 +43,9 @@ int	validate_map_elements(char **map)
 	return (1);
 }
 
+// Cuenta la cantidad total de coleccionables ('C') en el mapa.
+// Recorre todo el mapa sumando las ocurrencias de 'C'.
+// Devuelve el número total de coleccionables encontrados.
 int	count_colec(char **map)
 {
 	int	fil;
@@ -62,6 +68,10 @@ int	count_colec(char **map)
 	return (count_c);
 }
 
+// Realiza un algoritmo flood fill para marcar las posiciones accesibles desde (x, y).
+// Marca con 'V' las celdas visitadas que no sean paredes ('1') ni ya visitadas ('V').
+// Sirve para comprobar la accesibilidad de las áreas del mapa.
+// Parámetros: mapa, coordenadas x e y, y la altura del mapa (número de filas).
 void	flood_fill(char **mapa, int x, int y, int alto)
 {
 	int	ancho;
@@ -78,9 +88,9 @@ void	flood_fill(char **mapa, int x, int y, int alto)
 	flood_fill(mapa, x, y - 1, alto);
 }
 
-//mapa rectangular?
-//mapa rodejat de murs?
-
+// Comprueba si el mapa es rectangular.
+// Compara la longitud de cada fila con la anterior.
+// Devuelve 1 si todas las filas tienen la misma longitud, 0 si alguna difiere.
 int	is_rectangular_map(char **map, int filas)
 {
 	if (filas <= 1)
@@ -95,6 +105,9 @@ int	is_rectangular_map(char **map, int filas)
 	return (1);
 }
 
+// Verifica que el borde del mapa esté completamente rodeado por paredes ('1').
+// Comprueba la primera y última fila, y la primera y última columna de cada fila.
+// Devuelve 1 si todas las posiciones del borde son paredes, 0 si no.
 int	check_walls_border(char **map, int filas)
 {
 	int	ancho;

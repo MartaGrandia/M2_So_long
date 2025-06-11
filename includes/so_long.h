@@ -72,8 +72,6 @@ int		check_walls_border(char **map, int filas);
 
 //----------utils----------
 void	find_player(char **map, int *x, int *y);
-void	print_map_debug(char **map, int height);
-void	print_map(char **map);
 
 //----------draw_map----------
 int		load_textures(t_game *game);

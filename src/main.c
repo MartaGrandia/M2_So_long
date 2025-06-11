@@ -12,6 +12,12 @@
 
 #include "../includes/so_long.h"
 
+// Valida el mapa antes de iniciar el juego:
+// - Comprueba que los elementos sean válidos y haya al menos un coleccionable
+// - Busca al jugador y realiza flood fill desde su posición
+// - Verifica que todos los coleccionables sean accesibles
+// - Comprueba que el mapa sea rectangular y esté rodeado de paredes
+// Devuelve 1 si el mapa es válido, o muestra el error correspondiente y devuelve 0
 static int	process_map(char **map, char **map_2, int filas)
 {
 	int		num_colec;
@@ -35,7 +41,12 @@ static int	process_map(char **map, char **map_2, int filas)
 	return (1);
 }
 
-// Función para inicializar el juego
+// Inicializa la estructura t_game con los valores del mapa:
+// - Guarda dimensiones del mapa y lo asigna a la estructura
+// - Inicializa la ventana MLX
+// - Carga y convierte las texturas en imágenes
+// - Dibuja el mapa inicial
+// Devuelve 1 si todo fue bien, o 0 si hubo un error en alguna parte
 static int	init_game(t_game *game, char **map, int map_height)
 {
 	game->map = map;
@@ -62,6 +73,8 @@ static int	init_game(t_game *game, char **map, int map_height)
 	return (1);
 }
 
+// Inicializa los valores de la estructura t_game a cero o NULL:
+// Se usa para asegurarse de que todos los campos están limpios antes de usarlos
 static void	init_game_struct(t_game *game)
 {
 	game->mlx = NULL;
@@ -75,6 +88,13 @@ static void	init_game_struct(t_game *game)
 	game->moves = 0;
 }
 
+// Función principal del juego:
+// - Valida el mapa original usando process_map
+// - Inicializa la estructura del juego con init_game_struct
+// - Crea el entorno gráfico con init_game
+// - Asocia el manejo de teclas y comienza el loop de MLX
+// - Limpia recursos al finalizar
+// Devuelve 0 si todo fue bien, o 1 si hubo errores
 static int	so_long(char **map_original, char **map_copy, int filas)
 {
 	t_game	game;

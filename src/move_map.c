@@ -12,6 +12,11 @@
 
 #include "../includes/so_long.h"
 
+// Maneja la lógica del movimiento del jugador en base a la nueva posición y el tipo de tile.
+// Verifica que la nueva posición esté dentro del mapa y que no sea una pared ('1').
+// Si el tile es un coleccionable ('C'), decrementa el contador y cambia el tile a suelo ('0')
+// Si el tile es la salida ('E'), solo permite cerrar la ventana (ganar) si no quedan coleccionables.
+// Retorna 1 si el movimiento es válido y puede realizarse, 0 en caso contrario.
 static int	handle_mov_logic(t_game *game, int new_x, int new_y, int new_tile)
 {
 	if (new_x < 0 || new_x >= game->map_width
@@ -37,6 +42,9 @@ static int	handle_mov_logic(t_game *game, int new_x, int new_y, int new_tile)
 	return (1);
 }
 
+// Aplica el movimiento actualizando la posición del jugador en el mapa,
+// actualiza el contador de movimientos, y redibuja el mapa completo.
+// Cambia la posición anterior del jugador a suelo ('0') y la nueva a jugador ('P').
 static void	apply_movement_and_draw(t_game *game, int new_x, int new_y)
 {
 	game->map[game->player_y][game->player_x] = '0';
@@ -48,6 +56,9 @@ static void	apply_movement_and_draw(t_game *game, int new_x, int new_y)
 	ft_printf("Movement: %d\n", game->moves);
 }
 
+// Calcula la nueva posición del jugador sumando el desplazamiento (dx, dy).
+// Obtiene el tile en la nueva posición y verifica si el movimiento es válido.
+// Si es válido, actualiza la posición y redibuja el mapa.
 static void	move_player(t_game *game, int dx, int dy)
 {
 	int	new_x;
@@ -61,7 +72,10 @@ static void	move_player(t_game *game, int dx, int dy)
 		apply_movement_and_draw(game, new_x, new_y);
 }
 
-// Ejemplo de handler para teclas (función básica)
+// Manejador básico de eventos de teclado.
+// Detecta las teclas W, A, S, D para mover al jugador en las cuatro direcciones.
+// También cierra la ventana si se presiona Escape.
+// Actualiza el contador de coleccionables antes de cada movimiento.
 void	key_handler(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
