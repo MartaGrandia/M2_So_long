@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:53:03 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 17:41:37 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:47:05 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,19 @@ int	load_textures(t_game *game)
 {
 	game->textures.wall = mlx_load_png("assets/wall.png");
 	if (!game->textures.wall)
-		return (error_texture(1));
+		return (free_textures_and_error(game, 1));
 	game->textures.floor = mlx_load_png("assets/floor.png");
 	if (!game->textures.floor)
-		return (error_texture(2));
+		return (free_textures_and_error(game, 2));
 	game->textures.collect = mlx_load_png("assets/collectible.png");
 	if (!game->textures.collect)
-		return (error_texture(3));
+		return (free_textures_and_error(game, 3));
 	game->textures.exit = mlx_load_png("assets/exit.png");
 	if (!game->textures.exit)
-		return (error_texture(4));
+		return (free_textures_and_error(game, 4));
 	game->textures.player = mlx_load_png("assets/player.png");
 	if (!game->textures.player)
-		return (error_texture(5));
-	game->textures.player = mlx_load_png("assets/player.png");
+		return (free_textures_and_error(game, 5));
 	return (1);
 }
 

@@ -6,14 +6,14 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:30:11 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 17:41:56 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:05:08 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
 // Maneja la lógica del mov del jugador segun la new posición y el tipo de tile.
-// Verif. que la newa posición esté dentro del mapa y que no sea un ('1').
+// Verif. que la new posición esté dentro del mapa y que no sea un ('1').
 // Si tile == coleccionable ('C'), contador--  y cambia el tile a suelo ('0')
 // Si el tile es ('E'), solo permite cerrar la ventana(ganar) si colect = 0
 // Retorna 1 si el movimiento es válido y puede realizarse, 0 en caso contrario.
@@ -36,21 +36,50 @@ static int	handle_mov_logic(t_game *game, int new_x, int new_y, int new_tile)
 			mlx_close_window(game->mlx);
 			return (1);
 		}
-		else
-			return (0);
 	}
 	return (1);
 }
 
-// Aplica el movimiento actualizando la posición del jugador en el mapa,
-// actualiza el contador de movimientos, y redibuja el mapa completo.
-// Cambia la posición anterior del jugador a ('0')  y la nueva a ('P').
+static void	find_exit_position(t_game *game, int *exit_x, int *exit_y)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (y < game->map_height)
+	{
+		x = 0;
+		while (x < game->map_width)
+		{
+			if (game->map[y][x] == 'E')
+			{
+				*exit_x = x;
+				*exit_y = y;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
 static void	apply_movement_and_draw(t_game *game, int new_x, int new_y)
 {
-	game->map[game->player_y][game->player_x] = '0';
+	char	new_tile;
+	int		exit_x;
+	int		exit_y;
+
+	new_tile = game->map[new_y][new_x];
+	find_exit_position(game, &exit_x, &exit_y);
+	if (game->player_x == exit_x && game->player_y == exit_y)
+		game->map[game->player_y][game->player_x] = 'E';
+	else
+		game->map[game->player_y][game->player_x] = '0';
 	game->player_x = new_x;
 	game->player_y = new_y;
-	game->map[new_y][new_x] = 'P';
+	if (new_tile != 'E')
+		game->map[new_y][new_x] = 'P';
 	game->moves++;
 	draw_map(game);
 	ft_printf("Movement: %d\n", game->moves);

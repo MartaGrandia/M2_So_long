@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/07 17:40:17 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:45:00 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_game
 char	**read_map(const char *ruta, int *filas);
 
 //----------free_utils---------
+int	free_textures_and_error(t_game *game, int err_code);
 void	cleanup_textures(t_game *game);
 void	*ft_free(void *ptr);
 char	**free_map(char **mapa, int line_count, char *line, int fd);

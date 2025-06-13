@@ -6,7 +6,7 @@
 /*   By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:02:10 by mgrandia          #+#    #+#             */
-/*   Updated: 2025/06/09 19:05:07 by mgrandia         ###   ########.fr       */
+/*   Updated: 2025/06/13 20:51:02 by mgrandia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ static char	*process_line(char *line)
 	return (line);
 }
 
+static void	simple_free_map(char **mapa, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		free(mapa[i]);
+	}
+	free(mapa);
+}
+
 // Añade una línea al mapa dinámicamente:
 // - Realoca el array de punteros para añadir una nueva línea más un NULL final.
 // - Duplica la línea recibida y la añade en la posición 'line_count'.
@@ -47,6 +59,12 @@ static char	**add_line_to_map(char **mapa, char *line, int line_count)
 		return (NULL);
 	mapa = temp;
 	mapa[line_count] = ft_strdup(line);
+	if (!mapa[line_count])
+	{
+		simple_free_map(mapa, line_count);
+		return (NULL);
+	}
+	mapa[line_count + 1] = NULL;
 	return (mapa);
 }
 
