@@ -1,4 +1,4 @@
-# 🎮 so_long
+# 🎮 🌻 so_long
 
 > A 2D top-down graphical game developed in C using the MiniLibX engine, featuring event-driven input handling, tile-based map parsing, and recursive path validation algorithms.
 
@@ -57,3 +57,13 @@ MiniLibX requires system graphics and X11 development headers installed:
 sudo apt-get install build-essential libx11-dev libxext-dev libbsd-dev zlib1g-dev
 
 # macOS (XQuartz / Native Cocoa frameworks)
+
+# Clone the repository
+git clone [https://github.com/your-username/so_long.git](https://github.com/your-username/so_long.git)
+cd so_long
+
+# Compile binary and MiniLibX library
+make
+
+# Run game with a valid map
+./so_long maps/valid_map.ber
